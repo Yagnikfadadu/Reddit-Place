@@ -15,10 +15,21 @@ public class HostReddit extends Frame implements ActionListener
     Button test1,test2;
     TextArea textArea;
     Panel panel;
-    String url = "jdbc:mysql://localhost:3306/test";
-    String username="root";
-    String pass="root";
+    String url = "jdbc:mysql://sql6.freemysqlhosting.net:3306/sql6484483";
+    String username="sql6484483";
+    String pass="KI1fI29LDc";
     static String col="1";
+    Connection connection;
+
+    {
+        try {
+            connection = DriverManager.getConnection(url,username,pass);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
 
     HostReddit()
     {
@@ -380,7 +391,7 @@ public class HostReddit extends Frame implements ActionListener
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             try {
-                Connection connection = DriverManager.getConnection(url,username,pass);
+
                 Statement statement = connection.createStatement();
                 statement.executeUpdate("insert into reddit values('"+coordinate+"','"+color+"','"+time+"');");
 
@@ -401,9 +412,8 @@ public class HostReddit extends Frame implements ActionListener
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             try {
-                Connection connection = DriverManager.getConnection(url,username,pass);
                 Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery("select * from reddit order by lastupdated asc;");
+                ResultSet resultSet = statement.executeQuery("select * from reddit order by updatedtime asc;");
 
                 while (resultSet.next())
                 {
